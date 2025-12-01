@@ -1,0 +1,16 @@
+﻿@using Acme.BookStore
+@model Author
+
+<div class="mb-3">
+    <label>نام</label>
+    <input name="Author.Name"
+           class="form-control"
+           value="@Model?.Name" />
+</div>
+
+<div class="mb-3">
+    <label>نام خانوادگی</label>
+    <input name="Author.Family"
+           class="form-control"
+           value="@Model?.Family" />
+</div>

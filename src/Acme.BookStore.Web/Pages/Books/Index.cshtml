@@ -1,0 +1,42 @@
+﻿@page
+@model Acme.BookStore.Web.Pages.Books.IndexModel
+
+<h2>لیست کتاب‌ها</h2>
+
+<a class="btn btn-primary mb-3" asp-page="Create">افزودن کتاب جدید</a>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>عنوان</th>
+            <th>نویسنده</th>
+            <th style="width:150px;">عملیات</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var book in Model.Books)
+        {
+            <tr>
+                <td>@book.Title</td>
+
+                <td>
+                    @await Component.InvokeAsync("AuthorName", new { bookId = book.Id })
+                </td>
+
+                <td>
+                    <a asp-page="Edit" asp-route-id="@book.Id" class="btn btn-sm btn-warning">ویرایش</a>
+
+                    <form method="post"
+                          asp-page-handler="Delete"
+                          asp-route-id="@book.Id"
+                          style="display:inline"
+                          onsubmit="return confirm('حذف شود؟');">
+
+                        <button class="btn btn-sm btn-danger">حذف</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

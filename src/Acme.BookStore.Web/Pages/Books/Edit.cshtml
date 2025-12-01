@@ -1,0 +1,29 @@
+﻿@page
+@model Acme.BookStore.Web.Pages.Books.EditModel
+@{
+    ViewData["Title"] = "ویرایش کتاب";
+}
+
+<h2>ویرایش کتاب</h2>
+
+<form method="post">
+
+    <div class="form-group mb-3">
+        <label asp-for="Input.Title"></label>
+        <input asp-for="Input.Title" class="form-control" />
+        <span asp-validation-for="Input.Title" class="text-danger"></span>
+    </div>
+
+    <hr />
+
+    <h4>مشخصات نویسنده</h4>
+
+    <!-- لود پارشیال نویسنده با ورودی bookId -->
+    @await Component.InvokeAsync("Author", new { bookId = Model.Id })
+
+    <hr />
+
+    <button type="submit" class="btn btn-primary">ذخیره تغییرات</button>
+    <a asp-page="./Index" class="btn btn-secondary">بازگشت</a>
+</form>
+

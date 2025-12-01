@@ -1,0 +1,14 @@
+﻿@page
+@model Acme.BookStore.Web.Pages.Books.CreateModel
+
+<form method="post">
+
+    <div class="form-group">
+        <label>عنوان کتاب</label>
+        <input asp-for="Input.Title" class="form-control" />
+    </div>
+
+    <hr />
+    @await Component.InvokeAsync("Author", new { bookId = (Guid?)null })
+    <button type="submit" class="btn btn-primary">ثبت</button>
+</form>
