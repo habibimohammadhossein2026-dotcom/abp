@@ -21,16 +21,12 @@ namespace Acme.BookStore.Books
             _eventBus = eventBus;
         }
 
-        // ---------------------------
-        // CREATE
-        // ---------------------------
         public async Task<Guid> CreateAsync(CreateBookDto input)
         {
             var book = new Book { Title = input.Title };
 
             await _bookRepository.InsertAsync(book, autoSave: true);
 
-            // Publish event → Author در EventHandler با Reflection ثبت می‌شود
             await _eventBus.PublishAsync(new BookCreatedEvent
             {
                 BookId = book.Id
@@ -39,24 +35,16 @@ namespace Acme.BookStore.Books
             return book.Id;
         }
 
-        // ---------------------------
-        // GET ONE
-        // ---------------------------
         public async Task<BookDto> GetAsync(Guid id)
         {
             var book = await _bookRepository.GetAsync(id);
 
-            // تبدیل به DTO
             return new BookDto
             {
                 Id = book.Id,
                 Title = book.Title
             };
         }
-
-        // ---------------------------
-        // UPDATE
-        // ---------------------------
         public async Task UpdateAsync(Guid id, UpdateBookDto input)
         {
             var book = await _bookRepository.GetAsync(id);
@@ -65,16 +53,12 @@ namespace Acme.BookStore.Books
 
             await _bookRepository.UpdateAsync(book, autoSave: true);
 
-            // Event برای هندل نویسنده در Reflection
             await _eventBus.PublishAsync(new BookUpdatedEvent
             {
                 BookId = id
             });
         }
 
-        // ---------------------------
-        // DELETE
-        // ---------------------------
         public async Task DeleteAsync(Guid id)
         {
             await _bookRepository.DeleteAsync(id);
@@ -85,9 +69,6 @@ namespace Acme.BookStore.Books
             });
         }
 
-        // ---------------------------
-        // GET LIST (OPTIONAL)
-        // ---------------------------
         public async Task<List<BookDto>> GetListAsync()
         {
             var items = await _bookRepository.GetListAsync();
