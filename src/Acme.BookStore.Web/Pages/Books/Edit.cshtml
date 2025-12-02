@@ -18,9 +18,7 @@
 
     <h4>مشخصات نویسنده</h4>
 
-    <!-- لود پارشیال نویسنده با ورودی bookId -->
-    @await Component.InvokeAsync("Author", new { bookId = Model.Id })
-
+    <render-components for="Input" />
     <hr />
 
     <button type="submit" class="btn btn-primary">ذخیره تغییرات</button>

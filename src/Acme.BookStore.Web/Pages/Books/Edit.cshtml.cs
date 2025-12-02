@@ -1,4 +1,5 @@
 ﻿using Acme.BookStore.Books;
+using Acme.BookStore.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
@@ -7,6 +8,9 @@ using Volo.Abp.EventBus.Distributed;
 
 namespace Acme.BookStore.Web.Pages.Books
 {
+    [RenderComponent("Author",
+        new[] { "bookId" },
+        new[] { "Id" })]
     public class EditModel : PageModel
     {
         private readonly BookAppService _bookAppService;
@@ -20,18 +24,15 @@ namespace Acme.BookStore.Web.Pages.Books
             _eventBus = eventBus;
         }
 
-        // BookId از Route گرفته می‌شود
         [BindProperty(SupportsGet = true)]
         public Guid Id { get; set; }
 
-        // DTO مخصوص کتاب (بدون Author)
         [BindProperty]
         public UpdateBookDto Input { get; set; }
 
         public async Task OnGetAsync()
         {
             var book = await _bookAppService.GetAsync(Id);
-
             Input = new UpdateBookDto
             {
                 Title = book.Title

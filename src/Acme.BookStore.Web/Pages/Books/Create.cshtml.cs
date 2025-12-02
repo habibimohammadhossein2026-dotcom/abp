@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace Acme.BookStore.Web.Pages.Books
 {
+    [RenderComponent("Author",null,null)]
     public class CreateModel : PageModel
     {
         private readonly BookAppService _bookAppService;
