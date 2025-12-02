@@ -30,11 +30,6 @@ namespace Acme.BookStore.Web.Pages.Books
         {
             await _bookAppService.DeleteAsync(id);
 
-            await _eventBus.PublishAsync(new BookDeletedEvent
-            {
-                BookId = id
-            });
-
             return RedirectToPage();
         }
     }

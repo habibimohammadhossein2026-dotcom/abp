@@ -1,4 +1,5 @@
 ﻿using Acme.BookStore;
+using Acme.BookStore.Web.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -14,10 +15,11 @@ public class AuthorViewComponent : ViewComponent, ITransientDependency
         _authorRepository = repo;
     }
 
-    public async Task<IViewComponentResult> InvokeAsync(Guid? bookId)
+    public async Task<IViewComponentResult> InvokeAsync()
     {
+        var pageModel = ViewContext.ViewData.Model;
+        var bookId = pageModel.GetValue<Guid?>("Id");
         Author model = null;
-
         if (bookId.HasValue)
         {
             model = await _authorRepository.FirstOrDefaultAsync(x => x.BookId == bookId.Value);

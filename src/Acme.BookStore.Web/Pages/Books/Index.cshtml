@@ -9,7 +9,7 @@
     <thead>
         <tr>
             <th>عنوان</th>
-            <th>نویسنده</th>
+
             <th style="width:150px;">عملیات</th>
         </tr>
     </thead>
@@ -20,9 +20,6 @@
             <tr>
                 <td>@book.Title</td>
 
-                <td>
-                    @await Component.InvokeAsync("AuthorName", new { bookId = book.Id })
-                </td>
 
                 <td>
                     <a asp-page="Edit" asp-route-id="@book.Id" class="btn btn-sm btn-warning">ویرایش</a>

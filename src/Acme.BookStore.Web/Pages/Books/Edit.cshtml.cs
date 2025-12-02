@@ -8,9 +8,6 @@ using Volo.Abp.EventBus.Distributed;
 
 namespace Acme.BookStore.Web.Pages.Books
 {
-    [RenderComponent("Author",
-        new[] { "bookId" },
-        new[] { "Id" })]
     public class EditModel : PageModel
     {
         private readonly BookAppService _bookAppService;
@@ -45,11 +42,6 @@ namespace Acme.BookStore.Web.Pages.Books
                 return Page();
 
             await _bookAppService.UpdateAsync(Id, Input);
-
-            await _eventBus.PublishAsync(new BookUpdatedEvent
-            {
-                BookId = Id
-            });
 
             return RedirectToPage("Index");
         }

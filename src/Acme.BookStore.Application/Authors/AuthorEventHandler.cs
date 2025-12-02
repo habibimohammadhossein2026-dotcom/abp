@@ -10,6 +10,7 @@ namespace Acme.BookStore.Books
     public class AuthorEventHandler :
         IDistributedEventHandler<BookCreatedEvent>,
         IDistributedEventHandler<BookUpdatedEvent>,
+        IDistributedEventHandler<BookDeletedEvent>,
         ITransientDependency
     {
         private readonly IHttpContextAccessor _contextAccessor;
@@ -75,6 +76,13 @@ namespace Acme.BookStore.Books
 
                 await _authorRepository.UpdateAsync(author, autoSave: true);
             }
+        }
+
+        public async Task HandleEventAsync(BookDeletedEvent eventData)
+        {
+            var author = await _authorRepository.FirstOrDefaultAsync(x => x.BookId == eventData.BookId);
+            await _authorRepository.DeleteAsync(author, autoSave: true);
+
         }
     }
 }
